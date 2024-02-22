@@ -5,14 +5,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class Solution {
+public abstract class SolutionBase {
 
-    private Scanner getScanner(String pathname) throws FileNotFoundException {
+    abstract protected int findHorizontalMirror(String[] pattern);
+
+    protected Scanner getScanner(String pathname) throws FileNotFoundException {
         File file = new File(pathname);
         return new Scanner(file);
     }
 
-    private String[] rotatePattern(String[] pattern) {
+    protected String[] rotatePattern(String[] pattern) {
         StringBuilder[] rotatedPatternBuilder = new StringBuilder[pattern[0].length()];
         for (int i = 0; i < rotatedPatternBuilder.length; i++) {
             rotatedPatternBuilder[i] = new StringBuilder();
@@ -28,34 +30,11 @@ public class Solution {
                 .toArray(String[]::new);
     }
 
-    private boolean validHorizontalMirror(String[] pattern, int objectIndex) {
-        int reflectionIndex = objectIndex + 3;
-        while (objectIndex >= 0 && reflectionIndex < pattern.length) {
-            if (!pattern[objectIndex--].equals(pattern[reflectionIndex++]))
-                return false;
-        }
-        // if we were able to reach edge of pattern then mirror was valid -> return true
-        return true;
-    }
-
-    private int findHorizontalMirror(String[] pattern) {
-        //looks for two identical lines next to each other
-        for (int i = 0; i < pattern.length - 1; i++) {
-            if (pattern[i].equals(pattern[i + 1])) {
-                //when found so checks if mirror on this position works for the whole pattern
-                if (validHorizontalMirror(pattern, i-1)) //start with item behind
-                    return i + 1; //indexes start with 1
-                //otherwise keep searching...
-            }
-        }
-        return -1;
-    }
-
-    private int findVerticalMirror(String[] pattern) {
+    protected int findVerticalMirror(String[] pattern) {
         return findHorizontalMirror(rotatePattern(pattern));
     }
 
-    private int checkPattern(List<String> pattern) {
+    protected int checkPattern(List<String> pattern) {
         String[] patternArr = pattern.toArray(String[]::new);
         int retVal = findHorizontalMirror(patternArr);
         return retVal > 0 ? retVal*100 : findVerticalMirror(patternArr);

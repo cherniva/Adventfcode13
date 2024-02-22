@@ -8,11 +8,15 @@ public class Main {
 
     public static void main(String[] args) {
         /*
-            testSample = 405
-            finalSample = 34918
+            Part 1:
+                testSample = 405
+                finalSample = 34918
+            Part 2:
+                testSample = 400
+                finalSample = 33054
          */
         String pathname = "src/main/resources/finalSample";
-        Solution solution = new Solution();
+        SolutionBase solution = new SolutionPart2();
         try {
             System.out.println(solution.solve(pathname));
         } catch (FileNotFoundException e) {

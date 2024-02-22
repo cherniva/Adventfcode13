@@ -35,7 +35,7 @@ public class Solution {
                 return false;
         }
         // if we were able to reach edge of pattern then mirror was valid -> return true
-        return objectIndex < 0 || reflectionIndex >= pattern.length;
+        return true;
     }
 
     private int findHorizontalMirror(String[] pattern) {
